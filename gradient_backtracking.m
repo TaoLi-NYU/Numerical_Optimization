@@ -7,9 +7,10 @@ function [y] = gradient_backtracking(f,df,alpha,beta,x,ftol)
 % alpha: 
 % beat: discounting factor
 % x: current point
-t=1;% initial step size
+
 e=1;% the difference between two iterates
 while(e>ftol)
+    t=1;% initial step size
     p=-df(x);%descent direction
     f_t=f(x+t*p); %
     f_a=f(x)+alpha*t*df(x)'*p;% upperline
