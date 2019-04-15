@@ -5,3 +5,12 @@ Currently, there are simplex method as well as one dimensional zero finding algo
 comprehesive table of contents will be provided here. Notice that the materials also cover some assignments related prigramms 
 and will be updated all the time.
 ## Table of contents
+1. zero_finding algoritms
+* one dimensional pure newton
+* two dimensional pure newton
+* pure scent 
+* bisection
+2. simplex for linear programming
+* textrule and Bland's rule
+3. Unconstrained Optimization
+* pure newton 
