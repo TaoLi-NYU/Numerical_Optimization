@@ -20,10 +20,12 @@ while(F_norm>ftol&&count<maxit)
     fprintf('%8.6e\t',F_val(1));
     fprintf('%8.6e\t',F_val(2));
     fprintf('%8.6e\t',F_norm);
+    %fprintf('%8.6e\t',abs(x(1)-1));
+    %fprintf('%8.6e\t',abs(x(2)+0.25));
     fprintf('\n');
     %pure newtom iterates
     J=Jacobian(x); %compute the jacobian matirx at x
-    p=linsolve(J,-F_val); % compute the newton step 
+    p=-linsolve(J,F_val); % compute the newton step 
     x=x+p;% update x
     % update count, evaluation F_val and norm  
     count=count+1;
@@ -31,6 +33,15 @@ while(F_norm>ftol&&count<maxit)
     F_norm=norm(F_val,2);
     
 end
+fprintf('%d\t',count);
+fprintf('%8.6e\t',x(1));
+fprintf('%8.6e\t',x(2));
+fprintf('%8.6e\t',F_val(1));
+fprintf('%8.6e\t',F_val(2));
+fprintf('%8.6e\t',F_norm);
+%fprintf('%8.6e\t',abs(x(1)-1));
+%fprintf('%8.6e\t',abs(x(2)+0.25));
+fprintf('\n');
 end
 
 
