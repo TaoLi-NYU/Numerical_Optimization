@@ -12,6 +12,7 @@ beta=0.5;
 gtol=1e-7;
 maxit=100;
 %% implementation 
-[sol,lambda]=newton_equ(@f_entropy,@df_entropy,@hf_entropy,A,x,alpha,beta,gtol,maxit);
-[sol2,lambda2]=infeasi_newton(@df_entropy,@hf_entropy,A,b,x,alpha,beta,gtol,maxit);
-%[sol3,lambda3]=infeasi_newton(@df_entropy,@hf_entropy,A,b,ones(n,1),alpha,beta,gtol,maxit);
+%[sol,lambda]=newton_equ(@f_entropy,@df_entropy,@hf_entropy,A,x,alpha,beta,gtol,maxit);
+%[sol2,lambda2]=infeasi_newton(@df_entropy,@hf_entropy,A,b,x,alpha,beta,gtol,maxit);
+[sol3,lambda3]=infeasi_newton(@df_entropy,@hf_entropy,A,b,ones(n,1),alpha,beta,gtol,maxit);
+%[sol4]=dual_newton(@f_dual,@df_dual,@hf_dual,A,b,alpha,beta,gtol,maxit);

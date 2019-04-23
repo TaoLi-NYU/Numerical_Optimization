@@ -10,6 +10,8 @@ function [sol,lambda] = newton_equ(f,df,hf,A,x,alpha,beta,gtol,maxit)
 e=1;
 [m,n]=size(A);
 k=1;
+data=zeros(1,maxit);
+data(1)=f(x);
 while(e>gtol&&k<maxit)
     D=df(x); % gradient at x
     H=hf(x); % the Hessian matrix 
@@ -33,8 +35,12 @@ while(e>gtol&&k<maxit)
     x=x+t*p;
     e=abs(D'*p);
     k=k+1;
+    data(k)=f_t;
 end
 sol=x;
 lambda=delta((n+1):end);
+data=data(:,1:k);
+figure(1);
+plot(1:k,abs(data-f_t));
 end
 

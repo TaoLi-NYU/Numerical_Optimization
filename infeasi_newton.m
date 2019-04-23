@@ -13,6 +13,7 @@ e=1;
 [m,n]=size(A);
 k=1;
 w=zeros(m,1);
+data=zeros(1,maxit);
 while(e>gtol&&k<maxit)
     D=df(x); % gradient at x
     H=hf(x); % the Hessian matrix 
@@ -32,6 +33,7 @@ while(e>gtol&&k<maxit)
     x=x+t*p;
     w=w+t*v;
     e1=norm(resd(A,b,D,x,w));
+    data(k)=e1;
     while(e1>(1-alpha*t)*e)
         t=beta*t;
         e=e1;
@@ -40,8 +42,13 @@ while(e>gtol&&k<maxit)
         e1=norm(resd(A,b,D,x,w));
     end
     e=e1;
+    k=k+1;
 end
 sol=x;
 lambda=w;
+data(k)=e;
+data=data(:,1:k);
+figure(1);
+plot(1:k,abs(data-e));
 end
 

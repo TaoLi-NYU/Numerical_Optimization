@@ -36,7 +36,7 @@ while(e>gtol&&k<=maxit)
     % keep record of each iteration 
     data(1,k)=f_t;
     data(2,k)=t;
-    e=abs(f_t-f(A,x));
+    e=norm(p);
     x=x+t*p;
 end
 center=x;
