@@ -27,7 +27,7 @@ while(F_norm>ftol&&k<maxit)
     %compute the hessain of the lagrangian
     H=He_F(x)-lambda*He_c(x);
     %Jacobian associated with Newton equation
-    J=[H C_grad;C_grad' 0];
+    J=[H -C_grad;C_grad' 0];
     p=-linsolve(J,F_val); % compute the newton step 
     x=x+p(1:N);% update x
     lambda=lambda+p(N+1:end);% update lambda

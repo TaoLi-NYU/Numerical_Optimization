@@ -52,11 +52,14 @@ while(grad_norm>ftol&&k<maxit)
     fprintf("%8.6e\t",f);
     fprintf("%8.6e\t",grad_norm);
     fprintf("%8.6e\t",alpha);
+    %fprintf("\n");
     fprintf("%8.6e\t",B);
     fprintf("%8.6e\n",norm_diff);
     % update B using BFGS
-    Bs=B*delta_x;
-    B=B-Bs*Bs'/(delta_x'*Bs)+delta_g*delta_g'/(delta_g'*delta_x);
+    if(delta_g'*delta_x>0)%positive-definiteness
+        Bs=B*delta_x;
+        B=B-Bs*Bs'/(delta_x'*Bs)+delta_g*delta_g'/(delta_g'*delta_x);
+    end
     % update x and g
     x=x+delta_x;
     g=g+delta_g;

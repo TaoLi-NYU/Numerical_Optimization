@@ -1,4 +1,4 @@
-function [minimizer] = quad_penalty(F,grad_F,He_F,c,grad_c,He_c,rho,x,ftol,maxit)
+function [minimizer,data] = quad_penalty(F,grad_F,He_F,c,grad_c,He_c,rho,x,ftol,maxit,data)
 % This function computes the minimizer of a given function F under equality
 % constraints c(x)=0 using quadratic penalty 
 %   F, grad_F, He_F: the function to be minimized and its gradient, Heesian
@@ -7,6 +7,8 @@ function [minimizer] = quad_penalty(F,grad_F,He_F,c,grad_c,He_c,rho,x,ftol,maxit
 %   x: initial point
 %   ftol: tolerance for the norm of gradient of F
 %   maxit: maximum number of iteration 
+%   data: initialized wiht [] for recording the x^* of each newton
+%   iteration
 f=F(x);%function evalution
 C=c(x);
 grad_P=grad_F(x)+rho*C*grad_c(x);%gradient of penalty function
@@ -35,14 +37,24 @@ end
     fprintf("%8.6e\t",f);
     fprintf("%8.6e\t",C);
     fprintf("%8.6e\n",norm_g);
-    
-if(rho<1000)
-    rho=10*rho;
-    %save current xstar and lambda to the file
-    x=quad_penalty(F,grad_F,He_F,c,grad_c,He_c,rho,x,ftol,maxit);%apply this func recursively
+    lambda=-rho*c(x);
+    x_lambda=[x;lambda];
+    data=[data,x_lambda];%data storage
+if(rho<1000) % we only consider rho=1 10 100 1000
+    rho=rho*10;
+    %keep record of current xstar 
+    [x,data]=quad_penalty(F,grad_F,He_F,c,grad_c,He_c,rho,x,ftol,maxit,data);%apply this func recursively
+
 end
     minimizer=x;
-
+    diff_data=abs(data-data(:,end));
+    disp('iter      x(rho)-x       lambda(rho)-lambda')
+    for i =1:4
+        fprintf("%d\t",i);
+        fprintf("%8.6e\t",norm(diff_data(1:2,i)));
+        fprintf("%8.6e\n",diff_data(3,i));
+    end
+    
 end
 
 
