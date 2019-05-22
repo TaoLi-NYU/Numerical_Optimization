@@ -1,4 +1,4 @@
-function [minimizer] = newton_lagrange(grad_F,He_F,c,grad_c,He_c,x,lambda,ftol,maxit)
+function [minimizer,data] = newton_lagrange(grad_F,He_F,c,grad_c,He_c,x,lambda,ftol,maxit)
 %This function computes the minimizer of F under equality constraints
 %c(x)=0 using Newton_Lagrange method
 %   F, grad_F, He_F: the function to be minimized and its gradient, Heesian
@@ -12,11 +12,13 @@ function [minimizer] = newton_lagrange(grad_F,He_F,c,grad_c,He_c,x,lambda,ftol,m
 N=length(x);
 M=length(lambda);
 F_val=zeros(N+M,1);
+data=zeros(N+M,maxit);
 C_grad=grad_c(x); %this is a column vector
 F_val(1:N)=grad_F(x)-C_grad*lambda;%the first N components
 F_val(N+1:end)=c(x);% the remaining components 
 F_norm=norm(F_val);
 k=0;%counting iter number
+data(:,1)=[x;lambda];
 while(F_norm>ftol&&k<maxit)
     % print relevant results
     fprintf('%d\t',k);
@@ -37,7 +39,9 @@ while(F_norm>ftol&&k<maxit)
     F_val(N+1:end)=c(x);% the remaining components 
     F_norm=norm(F_val);
     k=k+1;
+    data(:,k+1)=[x;lambda];
 end
+    data=data(:,1:k+1);
     fprintf('%d\t',k);
     fprintf('%8.6e\t',lambda);
     fprintf('%8.6e\t',x);

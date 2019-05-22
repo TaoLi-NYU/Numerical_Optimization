@@ -44,10 +44,10 @@ if(rho<1000) % we only consider rho=1 10 100 1000
     rho=rho*10;
     %keep record of current xstar 
     [x,data]=quad_penalty(F,grad_F,He_F,c,grad_c,He_c,rho,x,ftol,maxit,data);%apply this func recursively
-
-end
-    minimizer=x;
-    diff_data=abs(data-data(:,end));
+    
+else
+    
+    diff_data=abs(data-[-1,-2,-1]');
     disp('iter      x(rho)-x       lambda(rho)-lambda')
     for i =1:4
         fprintf("%d\t",i);
@@ -55,6 +55,8 @@ end
         fprintf("%8.6e\n",diff_data(3,i));
     end
     
+end
+minimizer=x;
 end
 
 
